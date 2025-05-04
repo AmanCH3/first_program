@@ -1,4 +1,5 @@
 import 'package:first_program/dashboard_view.dart';
+import 'package:first_program/view/layout_view.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
@@ -7,7 +8,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: DashboardView(),
+      home: LayoutView(),
       debugShowCheckedModeBanner: false,
     );
   }
