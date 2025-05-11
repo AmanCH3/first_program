@@ -1,15 +1,16 @@
-import 'package:first_program/dashboard_view.dart';
+
+import 'package:first_program/view/airthematic_new_view.dart';
+import 'package:first_program/view/column_view2.dart';
 import 'package:first_program/view/layout_view.dart';
 import 'package:flutter/material.dart';
+
+import 'list_tile.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: LayoutView(),
-      debugShowCheckedModeBanner: false,
-    );
+    return MaterialApp(home: AirthematicNewView() , debugShowCheckedModeBanner: false);
   }
 }
