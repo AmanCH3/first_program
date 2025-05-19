@@ -1,5 +1,6 @@
+import 'package:first_program/app.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:first_program/model/student.dart';
 
 class StudentListView extends StatefulWidget {
   const StudentListView({super.key});
@@ -9,134 +10,141 @@ class StudentListView extends StatefulWidget {
 }
 
 class _StudentListViewState extends State<StudentListView> {
-  final fNameController = TextEditingController();
-  final lNameController = TextEditingController();
-  final myKey = GlobalKey<FormState>();
-  final List<Student> lstStudents = [];
 
-  String? city;
-  final items = [
-    const DropdownMenuItem(value: 'Kathmandu', child: Text("Kathmandu")),
-    const DropdownMenuItem(value: 'Pokhara', child: Text("Pokhara")),
-    const DropdownMenuItem(value: 'Chitwan', child: Text("Chitwan")),
-  ];
+  final lstCity = ["Kathmandu" , "Bhaktapur" , "Lalitpur" , "Pokhara"] ;
+  final lstStudent = [] ;
+  final fnameController = TextEditingController() ;
+  final lnameController = TextEditingController() ;
+
+  String ? selectedCity ;
+  final _formKey = GlobalKey<FormState>() ;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Student ListView")),
+      appBar: AppBar(title: const Text("Student View") , centerTitle: true
+        ,),
+
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(8.0),
         child: Form(
-          key: myKey,
+          key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextFormField(
-                controller: fNameController,
-                keyboardType: TextInputType.text,
+                controller: fnameController,
                 decoration: const InputDecoration(
-                  labelText: "Firstname",
-                  border: OutlineInputBorder(),
+                  labelText: "First Name" ,
+                  hintText: "Enter your first name" ,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)) ,
+                    borderSide: BorderSide(color: Colors.blue , width: 2) ,
+
+
+                  )
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter first name";
+
+                validator: (value){
+                  if(value == null || value.isEmpty){
+                    return "Please enter your first name" ;
                   }
-                  return null;
+                  return null ;
                 },
-              ),
-              const SizedBox(height: 16),
+              ) ,
+              const SizedBox(height: 8,) ,
               TextFormField(
-                controller: lNameController,
-                keyboardType: TextInputType.text,
+                controller: lnameController,
                 decoration: const InputDecoration(
-                  labelText: "Lastname",
-                  border: OutlineInputBorder(),
+                  labelText: "Last Name" ,
+                  hintText: "Enter your last name" ,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)) ,
+
+                  )
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter last name";
+
+                validator: (value){
+                  if(value == null || value.isEmpty){
+                    return "Please enter your last name" ;
                   }
-                  return null;
+                  return null ;
                 },
-              ),
-              const SizedBox(height: 16),
-              DropdownButtonFormField(
-                icon: const Icon(Icons.arrow_downward),
-                items: items,
-                onChanged: (value) {
+              ) ,
+
+              const SizedBox(height: 10,) ,
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(
+                  labelText: "Select City" ,
+                  hintText: "Select your city" ,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)) ,
+                    borderSide: BorderSide(color: Colors.blue , width: 2),
+                  )
+                ),
+
+                value: selectedCity,
+                items : lstCity.map((city){
+                  return DropdownMenuItem(value : city , child: Text(city)) ;
+                }).toList() ,
+                onChanged: (value){
                   setState(() {
-                    city = value;
+                    selectedCity = value ;
+
                   });
                 },
-                value: city,
-                hint: const Text("Select city"),
-                decoration: const InputDecoration(
-                  labelText: "Select city",
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null) {
-                    return "Please select a city";
+
+                validator: (value){
+                  if(value == null){
+                    return "Please select your city" ;
                   }
-                  return null;
+
+                  return null ;
                 },
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (myKey.currentState!.validate()) {
-                      final student = Student(
-                        fname: fNameController.text,
-                        lname: lNameController.text,
-                        city: city!,
-                      );
+              ) ,
+              const SizedBox(height: 10,) ,
+              ElevatedButton(style  : ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue[100] ,
+                padding: const EdgeInsets.all(15) ,
+              ),onPressed: (){
+                if(_formKey.currentState!.validate()){
+                  lstStudent.add({
+                    "first_name" : fnameController.text ,
+                    "last_name" : lnameController.text ,
+                    "city" : selectedCity ,
+                  }) ;
+                  setState(() {
 
-                      setState(() {
-                        lstStudents.add(student);
-                      });
+                  });
+                }
+              }, child: const Text("Submit")) ,
 
-                      // Clear the form
-                      fNameController.clear();
-                      lNameController.clear();
-                      setState(() {
-                        city = null;
-                      });
-                    }
-                  },
-                  child: const Text("Add Student"),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Expanded(
-                child: lstStudents.isNotEmpty
-                    ? ListView.builder(
-                  itemCount: lstStudents.length,
-                  itemBuilder: (context, index) {
+              const SizedBox(height: 18,) ,
+              lstCity.isEmpty ? const Text("No data found") : Expanded(
+                  child: ListView.builder(itemCount : lstStudent.length ,itemBuilder: (context , index){
                     return ListTile(
-                      leading: const Icon(Icons.person),
                       title: Text(
-                          '${lstStudents[index].fname} ${lstStudents[index].lname}'),
-                      subtitle: Text(lstStudents[index].city),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () {
-                          setState(() {
-                            lstStudents.removeAt(index);
-                          });
-                        },
+                       "${lstStudent[index]["first_name"]} ${lstStudent[index]["last_name"]}" ,
+
                       ),
-                    );
-                  },
-                )
-                    : const Center(child: Text("No data")),
-              )
+                      subtitle: Text(lstStudent[index]["city"]),
+                      trailing:
+                      IconButton(onPressed: (){
+                        setState(() {
+                          lstStudent.removeAt(index );
+                        });
+
+                      }, icon: const Icon(Icons.delete)),
+
+                    ) ;
+
+
+                  }))
             ],
           ),
         ),
       ),
-    );
+
+    ) ;
   }
 }
