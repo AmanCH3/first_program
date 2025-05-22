@@ -1,5 +1,6 @@
 
 import 'package:first_program/view/airthematic_new_view.dart';
+import 'package:first_program/view/calculator_view.dart';
 import 'package:first_program/view/cart_view.dart';
 import 'package:first_program/view/column_view2.dart';
 import 'package:first_program/view/container_view.dart';
@@ -17,6 +18,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: GridScreen() , debugShowCheckedModeBanner: false);
+    return MaterialApp(home: CalculatorView() , debugShowCheckedModeBanner: false);
   }
 }
