@@ -4,6 +4,7 @@ import 'package:first_program/view/cart_view.dart';
 import 'package:first_program/view/column_view2.dart';
 import 'package:first_program/view/container_view.dart';
 import 'package:first_program/view/flexible_expandend_view.dart';
+import 'package:first_program/view/grid_screen.dart';
 import 'package:first_program/view/layout_view.dart';
 import 'package:first_program/view/load_image_view.dart';
 import 'package:first_program/view/student_list_view.dart';
@@ -16,6 +17,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: StudentListView() , debugShowCheckedModeBanner: false);
+    return MaterialApp(home: GridScreen() , debugShowCheckedModeBanner: false);
   }
 }
