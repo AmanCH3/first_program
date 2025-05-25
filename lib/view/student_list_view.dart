@@ -1,4 +1,5 @@
 import 'package:first_program/app.dart';
+import 'package:first_program/view/output_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -104,7 +105,7 @@ class _StudentListViewState extends State<StudentListView> {
               ) ,
               const SizedBox(height: 10,) ,
               ElevatedButton(style  : ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue[100] ,
+                // backgroundColor: Colors.blue[100] ,
                 padding: const EdgeInsets.all(15) ,
               ),onPressed: (){
                 if(_formKey.currentState!.validate()){
@@ -131,10 +132,34 @@ class _StudentListViewState extends State<StudentListView> {
                       trailing:
                       IconButton(onPressed: (){
                         setState(() {
-                          lstStudent.removeAt(index );
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => OutputView(student: lstStudent[index]) )) ;
                         });
+                        // setState(() {
+                        //   lstStudent.removeAt(index );
+                        // });
+                        AlertDialog alert = AlertDialog(
+                          title:  const Text("Delete ?"),
+                          content: Text("Are you sure you want to delete ${lstStudent[index]} ??"),
+                          actions: [
+                            TextButton(onPressed: (){
+                              Navigator.pop(context);
+                            }, child: const Text("No")) ,
+                            TextButton(onPressed: (){
+                              setState(() {
 
-                      }, icon: const Icon(Icons.delete)),
+                                lstStudent.removeAt(index) ;
+                              });
+                              Navigator.pop(context) ;
+                            }, child: Text("Yes"))
+                          ],
+                        ) ;
+
+                        showDialog(context: context, builder: (BuildContext context){
+                          return alert ;
+
+                        }) ;
+
+                      }, icon: const Icon(Icons.delete )),
 
                     ) ;
 
