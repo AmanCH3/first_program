@@ -21,6 +21,7 @@ class _StackImageViewState extends State<StackImageView> {
                height: 400,
                width: double.infinity,
                child: Icon(Icons.account_balance_wallet),
+
              )
            ],
          ),

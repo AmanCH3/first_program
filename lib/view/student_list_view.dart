@@ -19,7 +19,6 @@ class _StudentListViewState extends State<StudentListView> {
 
   String ? selectedCity ;
   final _formKey = GlobalKey<FormState>() ;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +26,7 @@ class _StudentListViewState extends State<StudentListView> {
         ,),
 
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16),
         child: Form(
           key: _formKey,
           child: Column(
@@ -74,7 +73,7 @@ class _StudentListViewState extends State<StudentListView> {
               ) ,
 
               const SizedBox(height: 10,) ,
-              DropdownButtonFormField<String>(
+              DropdownButtonFormField(
                 decoration: const InputDecoration(
                   labelText: "Select City" ,
                   hintText: "Select your city" ,
@@ -88,6 +87,7 @@ class _StudentListViewState extends State<StudentListView> {
                 items : lstCity.map((city){
                   return DropdownMenuItem(value : city , child: Text(city)) ;
                 }).toList() ,
+
                 onChanged: (value){
                   setState(() {
                     selectedCity = value ;
@@ -122,15 +122,15 @@ class _StudentListViewState extends State<StudentListView> {
 
               const SizedBox(height: 18,) ,
               lstCity.isEmpty ? const Text("No data found") : Expanded(
-                  child: ListView.builder(itemCount : lstStudent.length ,itemBuilder: (context , index){
+                  child: ListView.separated(itemCount : lstStudent.length , separatorBuilder: (context , index) => const Divider() ,itemBuilder: (context , index){
                     return ListTile(
                       title: Text(
-                       "${lstStudent[index]["first_name"]} ${lstStudent[index]["last_name"]}" ,
+                       // "${lstStudent[index]["first_name"]} ${lstStudent[index]["last_name"]}" ,
 
+                        "${lstStudent[index]["first_name"]} ${lstStudent[index]["last_name"]}" ,
                       ),
                       subtitle: Text(lstStudent[index]["city"]),
-                      trailing:
-                      IconButton(onPressed: (){
+                      trailing: IconButton(onPressed: (){
                         setState(() {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => OutputView(student: lstStudent[index]) )) ;
                         });

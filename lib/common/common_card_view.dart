@@ -23,9 +23,14 @@ class CommonCardView extends StatelessWidget {
         ),
         color: color ,
         child: Center(
-          child: Text(
-            title ,
-            style: TextStyle(color: Colors.white, fontSize: 24),
+          child: GestureDetector(
+            onTap: () {
+              
+            },
+            child: Text(
+              title ,
+              style: TextStyle(color: Colors.white, fontSize: 24),
+            ),
           ),
         ),
 
