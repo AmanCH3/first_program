@@ -23,7 +23,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: DataTable2() , debugShowCheckedModeBanner: false , theme: getApplicationTheme(),
+    return MaterialApp(home: StackImageView() , debugShowCheckedModeBanner: false , theme: getApplicationTheme(),
     ) ;
   }
 }
